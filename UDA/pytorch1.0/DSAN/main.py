@@ -150,12 +150,12 @@ def get_args():
     parser.add_argument('--nclass', type=int,
                         help='Number of classes', default=4)
     parser.add_argument('--batch_size', type=float,
-                        help='batch size', default=36)
+                        help='batch size', default=32)
     parser.add_argument('--nepoch', type=int,
-                        help='Total epoch num', default=5)
+                        help='Total epoch num', default=200)
     parser.add_argument('--lr', type=list, help='Learning rate', default=[0.001, 0.001, 0.01])
     parser.add_argument('--early_stop', type=int,
-                        help='Early stoping number', default=20)
+                        help='Early stoping number', default=30)
     parser.add_argument('--seed', type=int,
                         help='Seed', default=2021)
     parser.add_argument('--weight', type=float,
@@ -186,6 +186,9 @@ if __name__ == '__main__':
 
     dataloaders = load_data(args.root_path, args.src,
                             args.tar, args.batch_size)
+    a= dataloaders[-1]
+    print(dataloaders[-1])
+    # 初始化模型
     model = DSAN(num_classes=args.nclass).cuda()
 
     correct = 0
@@ -209,6 +212,7 @@ if __name__ == '__main__':
             {'params': model.cls_fc.parameters(), 'lr': args.lr[1]},
         ], lr=args.lr[0], momentum=args.momentum, weight_decay=args.decay)
 
+
     # ================================================
     '''训练之前，保存日志'''
     os.environ["WANDB_API_KEY"] = "ad04eb473dc9c8f09d7c2956e357f0aafe10e1f4"
@@ -224,6 +228,7 @@ if __name__ == '__main__':
         stop += 1
         for index, param_group in enumerate(optimizer.param_groups):
             param_group['lr'] = args.lr[index] / math.pow((1 + 10 * (epoch - 1) / args.nepoch), 0.75)
+
 
 
         # 训练

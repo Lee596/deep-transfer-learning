@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import ResNet
+from ResNet import ResNet
 import lmmd
 
 class DSAN(nn.Module):

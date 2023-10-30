@@ -20,9 +20,9 @@ no_cuda =False
 seed = 8
 log_interval = 10
 l2_decay = 5e-4
-root_path = "/data/zhuyc/OFFICE31/"
-src_name = "amazon"
-tgt_name = "dslr"
+root_path = "/Users/jiangyue/project/graduationDesign/adaption/deep-transfer-learning-master/data/ricev1/"
+src_name = "indoor"
+tgt_name = "field2"
 
 cuda = not no_cuda and torch.cuda.is_available()
 
